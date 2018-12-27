@@ -1,13 +1,16 @@
 pipeline {
-    triggers {
-        parameterizedCron(env.BRANCH_NAME == 'master' && env.GIT_AUTHOR_EMAIL.length() > 0  ? '''
-        # schedule every single minute
-        * * * * *''' : '')
-    }
+    // triggers {
+    //     parameterizedCron(env.BRANCH_NAME == 'master' && env.GIT_AUTHOR_EMAIL.length() > 0  ? '''
+    //     # schedule every single minute
+    //     * * * * *''' : '')
+    // }
     agent any
     stages{
         stage('Build'){
             steps {
+                echo ${env.BRANCH_NAME}
+                echo ${env.GIT_BRANCH}
+                echo ${env.GIT_AUTHOR_EMAIL}
                 sh 'mvn clean package'
             }
             post {
