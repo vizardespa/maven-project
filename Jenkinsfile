@@ -1,11 +1,6 @@
 pipeline {
     triggers {
-        committerEmail = sh (
-            script: 'git --no-pager show -s --format=\'%ae\'',
-            returnStdout: true
-        ).trim()
-
-        parameterizedCron(env.BRANCH_NAME == 'master' && committerEmail.length() > 0  ? '''
+        parameterizedCron(env.BRANCH_NAME == 'master' && env.GIT_AUTHOR_EMAIL.length() > 0  ? '''
         # schedule every single minute
         * * * * *''' : '')
     }
